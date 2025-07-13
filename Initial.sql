@@ -5,6 +5,7 @@ create table if not exists "hotels"(
   title varchar not null, --от 3 до 75 символов
   description varchar not null, --до 1500 символов
   is_active boolean not null, --работает ли отель
+  is_accept_reservations boolean not null, --принимает ли брони (нужно отключать при внесении каких либо изменений и включать когда изменения вступили в силу)
   stars smallint, --если указано - от 1 до 5
   
   city varchar not null,
