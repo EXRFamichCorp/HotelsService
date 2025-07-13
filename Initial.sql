@@ -88,9 +88,9 @@ create table if not exists "rates"(
 
   min_nights_count smallint not null,
   max_nights_count smallint not null,
-
-  children_max_number smallint  not null, --максимальное количество взрослых в номере
-  adults_max_number smallint not null, --максимальное количество детей в номере
+  
+  adults_max_number smallint not null, --максимальное количество взрослых в номере
+  children_max_number smallint  not null, --максимальное количество детей в номере
   pets_max_number smallint not null, --максимальное количество питомцев в номере
 );
 
