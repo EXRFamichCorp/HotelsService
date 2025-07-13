@@ -71,7 +71,7 @@ create table if not exists "room_category_conveniences"(
   room_category_id int references rates("id") not null,
   convenience_id int references conveniences("id") not null,
 
-  primary key (rate_id, convenience_id)
+  primary key (room_category_id, convenience_id)
 );
 
 
