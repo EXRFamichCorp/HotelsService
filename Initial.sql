@@ -1,0 +1,113 @@
+-- информация об отеле 
+create table if not exists "hotels"(
+  id serial primary key,
+  
+  title varchar not null, --от 3 до 75 символов
+  description varchar not null, --до 1500 символов
+  is_active boolean not null, --работает ли отель
+  stars smallint, --если указано - от 1 до 5
+  
+  city varchar not null,
+  address varchar not null,
+  
+  latitude decimal(10, 7) not null,
+  longitute decimal(10, 7) not null,
+  
+  phone_number varchar not null,
+  email varchar not null,
+  
+  check_in_time time not null,
+  check_in_time time not null
+);
+
+-- частые предпочтения которые админ может указать в тарифе номера как опцию для гостя (цветы в номере например)
+create table if not exists "preferences"(
+  id serial primary key,
+  description varchar not null, --от 3 до 100 символов
+  price decimal(10, 2) not null --число >= 0
+);
+
+-- сервисы которые предоставляет ресторан (трансфер до отеля, завтрак, уборка и тп)
+create table if not exists "services"(
+  id serial primary key,
+  title varchar not null, --от 3 до 75 символов
+  description varchar, --до 750 символов
+  price decimal(10, 2) not null --число >= 0
+);
+
+
+-- Все что связано с удобствами
+-- категории удобств
+create table if not exists "convenience_categories"(
+  id serial primary key,
+  title varchar not null, --от 2 до 50 символов
+  icon_url varchar not null
+);
+
+-- удобства
+create table if not exists "conveniences"(
+  id serial primary key,
+  category_id int references convenience_categories("id")
+  
+  title varchar not null
+);
+
+
+-- Все что связано с номерами
+-- категории комнат
+create table if not exists "room_categories"(
+  id serial primary key,
+  hotel_id int references hotels("id") not null,
+
+  title varchar not null, --от 3 до 50 символов
+  description varchar, --до 500 символов
+  base_price decimal(10, 2) not null, -- базовая цена на одного гостя за ночь без учета моментиков
+  
+  rooms_count int not null
+);
+
+-- удобства которые есть в номерах этой категории
+create table if not exists "room_category_conveniences"(
+  room_category_id int references rates("id") not null,
+  convenience_id int references conveniences("id") not null,
+
+  primary key (rate_id, convenience_id)
+);
+
+
+-- Все что связано с тарифами
+-- тарифы
+create table if not exists "rates"(
+  id serial primary key,
+  room_category_id int references room_categories("id") not null,
+  
+  title varchar not null, --от 3 до 50 символов
+  description varchar, --до 500 символов
+
+  prepayment_in_percents smallint not null, --предоплата в процентах (от 0 до 100)
+
+  min_nights_count smallint not null,
+  max_nights_count smallint not null,
+
+  children_max_number smallint  not null, --максимальное количество взрослых в номере
+  adults_max_number smallint not null, --максимальное количество детей в номере
+  pets_max_number smallint not null, --максимальное количество питомцев в номере
+);
+
+-- предпочтения которые можно выбрать в этом тарифе
+create table if not exists "rate_preferences"(
+  rate_id int references rates("id") not null,
+  preference_id int references preferences("id") not null,
+
+  primary key (rate_id, preference_id)
+);
+
+-- включенные сервисы в тариф с указанной скидкой на стоимость сервиса (если платный сервис)
+create table if not exists "rate_included_services"(
+  rate_id int references rates("id") not null,
+  service_id int references services("id") not null,
+  discount smallint not null, --скидка (от 0 до 100)
+  
+  primary key (rate_id, service_id)
+);
+
