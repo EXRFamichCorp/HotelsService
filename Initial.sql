@@ -17,7 +17,7 @@ create table if not exists "hotels"(
   email varchar not null,
   
   check_in_time time not null,
-  check_in_time time not null
+  check_out_time time not null
 );
 
 -- сервисы которые предоставляет ресторан (трансфер до отеля, завтрак, уборка и тп)
