@@ -25,7 +25,8 @@ create table if not exists "hotels"(
 create table if not exists "preferences"(
   id serial primary key,
   description varchar not null, --от 3 до 100 символов
-  price decimal(10, 2) not null --число >= 0
+  price decimal(10, 2) not null, --число >= 0
+  last_edited_at_msk datetime not null --время последнего изменения
 );
 
 -- сервисы которые предоставляет ресторан (трансфер до отеля, завтрак, уборка и тп)
@@ -33,7 +34,8 @@ create table if not exists "services"(
   id serial primary key,
   title varchar not null, --от 3 до 75 символов
   description varchar, --до 750 символов
-  price decimal(10, 2) not null --число >= 0
+  price decimal(10, 2) not null, --число >= 0
+  last_edited_at_msk datetime not null --время последнего изменения
 );
 
 
