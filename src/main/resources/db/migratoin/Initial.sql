@@ -1,4 +1,4 @@
--- информация об отеле 
+-- информация об отеле
 create table if not exists "hotels"(
   id uuid primary key not null,
   

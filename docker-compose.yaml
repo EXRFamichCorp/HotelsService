@@ -1,0 +1,15 @@
+version: '3.8'
+
+volumes:
+  db-data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5437:5432"
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/postgresql/data
