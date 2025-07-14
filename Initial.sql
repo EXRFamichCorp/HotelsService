@@ -1,6 +1,6 @@
 -- информация об отеле 
 create table if not exists "hotels"(
-  id serial primary key,
+  id uuid primary key not null,
   
   title varchar not null, --от 3 до 75 символов
   description varchar not null, --до 1500 символов
