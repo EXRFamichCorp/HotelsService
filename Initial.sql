@@ -20,7 +20,7 @@ create table if not exists "hotels"(
   check_in_time time not null
 );
 
--- частые предпочтения которые админ может указать в тарифе номера как опцию для гостя (цветы в номере например)
+-- частые предпочтения которые админ может указать в тарифе номера как опцию для гостя (доп кровать, девчуля в нномер)
 create table if not exists "preferences"(
   id serial primary key,
   description varchar not null, --от 3 до 100 символов
@@ -63,11 +63,8 @@ create table if not exists "room_categories"(
 
   title varchar not null, --от 3 до 50 символов
   description varchar, --до 500 символов
-  base_price decimal(10, 2) not null, --базовая цена на одного гостя за ночь без учета моментиков
   
-  rooms_count int not null,
-
-  price_last_edited_at_msk datetime not null --время последнего изменения цены
+  rooms_count int not null
 );
 
 -- удобства которые есть в номерах этой категории
