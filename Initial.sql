@@ -20,21 +20,13 @@ create table if not exists "hotels"(
   check_in_time time not null
 );
 
--- частые предпочтения которые админ может указать в тарифе номера как опцию для гостя (доп кровать, девчуля в нномер)
-create table if not exists "preferences"(
-  id serial primary key,
-  description varchar not null, --от 3 до 100 символов
-  price decimal(10, 2) not null, --число >= 0
-  price_last_edited_at_msk datetime not null --время последнего изменения цены
-);
-
 -- сервисы которые предоставляет ресторан (трансфер до отеля, завтрак, уборка и тп)
 create table if not exists "services"(
   id serial primary key,
   title varchar not null, --от 3 до 75 символов
   description varchar, --до 750 символов
   price decimal(10, 2) not null, --число >= 0
-  price_last_edited_at_msk datetime not null --время последнего изменения цены
+  price_last_edited_at_utc datetime not null --время последнего изменения цены
 );
 
 
@@ -69,12 +61,19 @@ create table if not exists "room_categories"(
 
 -- удобства которые есть в номерах этой категории
 create table if not exists "room_category_conveniences"(
-  room_category_id int references rates("id") not null,
+  room_category_id int references room_categories("id") not null,
   convenience_id int references conveniences("id") not null,
 
   primary key (room_category_id, convenience_id)
 );
 
+-- доп. опции для данной категории номера (доп кровать, девчуля в нномер)
+create table if not exists "room_category_options"(
+  id serial primary key,
+  room_category_id int references room_categories("id") not null,
+  price decimal(10, 2) not null, --число >= 0
+  price_last_edited_at_utc datetime not null --время последнего изменения цены
+);
 
 -- Все что связано с тарифами
 -- тарифы
@@ -92,15 +91,7 @@ create table if not exists "rates"(
   
   adults_max_number smallint not null, --максимальное количество взрослых в номере
   children_max_number smallint  not null, --максимальное количество детей в номере
-  pets_max_number smallint not null, --максимальное количество питомцев в номере
-);
-
--- предпочтения которые можно выбрать в этом тарифе
-create table if not exists "rate_preferences"(
-  rate_id int references rates("id") not null,
-  preference_id int references preferences("id") not null,
-
-  primary key (rate_id, preference_id)
+  pets_max_number smallint not null --максимальное количество питомцев в номере
 );
 
 -- включенные сервисы в тариф с указанной скидкой на стоимость сервиса (если платный сервис)
