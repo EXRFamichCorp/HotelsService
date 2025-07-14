@@ -50,7 +50,7 @@ create table if not exists "convenience_categories"(
 -- удобства
 create table if not exists "conveniences"(
   id serial primary key,
-  category_id int references convenience_categories("id")
+  category_id int references convenience_categories("id"),
   
   title varchar not null
 );
