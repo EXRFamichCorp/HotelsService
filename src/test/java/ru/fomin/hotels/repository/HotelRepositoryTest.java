@@ -1,6 +1,7 @@
 package ru.fomin.hotels.repository;
 
 import jdk.jfr.Description;
+import org.h2.mvstore.Page;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
