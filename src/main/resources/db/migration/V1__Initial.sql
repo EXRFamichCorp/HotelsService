@@ -25,7 +25,6 @@ create table if not exists services(
                                        id serial primary key,
                                        title varchar not null, --от 3 до 75 символов
                                        description varchar, --до 750 символов
-                                       price decimal(10, 2) not null, --число >= 0
     price_last_edited_at_utc timestamp not null -- изменено date на timestamp
     );
 
@@ -64,7 +63,6 @@ create table if not exists room_category_conveniences(
 create table if not exists room_category_options(
                                                     id serial primary key,
                                                     room_category_id int references room_categories(id) not null,
-    price decimal(10, 2) not null, --число >= 0
     price_last_edited_at_utc timestamp not null -- изменено date на timestamp
     );
 
