@@ -1,22 +1,28 @@
 package ru.fomin.hotels.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import ru.fomin.hotels.dto.request.HotelCreatRequest;
-import ru.fomin.hotels.dto.request.HotelUpdateRequest;
-import ru.fomin.hotels.dto.response.HotelCreatResponse;
-import ru.fomin.hotels.dto.response.HotelFindByIdResponse;
+import ru.fomin.hotels.dto.request.CreatHotelRequest;
+import ru.fomin.hotels.dto.request.EnableAndDisableReservationsHotelRequest;
+import ru.fomin.hotels.dto.request.UpdateHotelRequest;
+import ru.fomin.hotels.dto.response.FindAllHotelForAdminResponse;
+import ru.fomin.hotels.dto.response.FindAllHotelForUserResponse;
+import ru.fomin.hotels.dto.response.FindByIdHotelResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface HotelService {
 
-    HotelCreatResponse createHotel(HotelCreatRequest request);
+    UUID createHotel(CreatHotelRequest request);
 
-    String updateHotel(HotelUpdateRequest request);
+    void updateHotel(UpdateHotelRequest request);
 
-    HotelFindByIdResponse findByID(UUID id);
+    FindByIdHotelResponse findByID(UUID id);
 
-    Page<HotelFindByIdResponse> findAll(Pageable pageable);
+    List<FindAllHotelForAdminResponse> findAllForAdmin();
 
+    List<FindAllHotelForUserResponse> findAllForUser();
+
+    void enableReservation(EnableAndDisableReservationsHotelRequest request);
+
+    void disableReservation(EnableAndDisableReservationsHotelRequest request);
 }

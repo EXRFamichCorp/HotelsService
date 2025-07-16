@@ -1,11 +1,7 @@
 package ru.fomin.hotels.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.*;
-import lombok.experimental.Accessors;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -16,7 +12,10 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HotelCreatRequest {
+public class UpdateHotelRequest {
+
+    @JsonProperty(value = "id")
+    private UUID id;
 
     @JsonProperty(value = "title")
     private String title;

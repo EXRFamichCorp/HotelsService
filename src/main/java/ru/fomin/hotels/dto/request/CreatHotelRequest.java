@@ -5,26 +5,19 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HotelUpdateRequest {
-
-    @JsonProperty(value = "id")
-    private UUID id;
+public class CreatHotelRequest {
 
     @JsonProperty(value = "title")
     private String title;
 
     @JsonProperty(value = "description")
     private String description;
-
-    @JsonProperty(value = "isAcceptReservations")
-    private boolean isAcceptReservations;
 
     @JsonProperty(value = "stars")
     private Short stars;

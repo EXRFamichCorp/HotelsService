@@ -1,4 +1,4 @@
-package ru.fomin.hotels.dto.response;
+package ru.fomin.hotels.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -10,7 +10,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HotelCreatResponse {
+public class EnableAndDisableReservationsHotelRequest {
 
     @JsonProperty(value = "id")
     private UUID id;

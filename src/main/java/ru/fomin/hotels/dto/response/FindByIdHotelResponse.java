@@ -12,7 +12,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class HotelFindByIdResponse {
+public class FindByIdHotelResponse {
 
     @JsonProperty(value = "id")
     private UUID id;
@@ -22,9 +22,6 @@ public class HotelFindByIdResponse {
 
     @JsonProperty(value = "description")
     private String description;
-
-    @JsonProperty(value = "isAcceptReservations")
-    private boolean isAcceptReservations;
 
     @JsonProperty(value = "stars")
     private Short stars;

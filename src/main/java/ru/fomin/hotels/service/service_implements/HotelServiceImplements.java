@@ -1,14 +1,14 @@
 package ru.fomin.hotels.service.service_implements;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.fomin.hotels.dto.request.HotelCreatRequest;
-import ru.fomin.hotels.dto.request.HotelUpdateRequest;
-import ru.fomin.hotels.dto.response.HotelCreatResponse;
-import ru.fomin.hotels.dto.response.HotelFindByIdResponse;
+import ru.fomin.hotels.dto.request.CreatHotelRequest;
+import ru.fomin.hotels.dto.request.EnableAndDisableReservationsHotelRequest;
+import ru.fomin.hotels.dto.request.UpdateHotelRequest;
+import ru.fomin.hotels.dto.response.FindAllHotelForAdminResponse;
+import ru.fomin.hotels.dto.response.FindAllHotelForUserResponse;
+import ru.fomin.hotels.dto.response.FindByIdHotelResponse;
 import ru.fomin.hotels.entity.Hotel;
 import ru.fomin.hotels.exception.NotFoundException;
 import ru.fomin.hotels.mapper.HotelMapper;
@@ -28,23 +28,24 @@ public class HotelServiceImplements implements HotelService {
 
     @Override
     @Transactional
-    public HotelCreatResponse createHotel(HotelCreatRequest request) {
-        return hotelMapper.mapToCreateResponse(hotelRepository.save(hotelMapper.mapToHotel(request)));
+    public UUID createHotel(CreatHotelRequest request) {
+        Hotel hotel = hotelMapper.mapToHotel(request);
+        hotel.setAcceptReservations(false);
+        return (hotelRepository.save(hotel)).getId();
     }
 
     @Override
     @Transactional
-    public String updateHotel(HotelUpdateRequest request) {
+    public void updateHotel(UpdateHotelRequest request) {
         Hotel hotel = hotelRepository.findById(request.getId())
                 .orElseThrow(()->new NotFoundException("hotel.notFound"));
         Hotel hotelResponse = hotelMapper.mapUpdate(request,hotel);
         hotelRepository.save(hotelResponse);
-        return "The hotel information has been changed";
     }
 
     @Override
     @Transactional(readOnly = true)
-    public HotelFindByIdResponse findByID(UUID id) {
+    public FindByIdHotelResponse findByID(UUID id) {
         Hotel hotel = hotelRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("hotel.notFound"));
         return hotelMapper.mapToFindResponse(hotel);
@@ -52,9 +53,34 @@ public class HotelServiceImplements implements HotelService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<HotelFindByIdResponse> findAll(Pageable pageable) {
-        Page<Hotel> hotels = hotelRepository.findAll(pageable);
-        return hotels.map(hotelMapper::mapToFindResponse);
+    public List<FindAllHotelForAdminResponse> findAllForAdmin() {
+        List<Hotel> hotels = hotelRepository.findAll();
+        return hotelMapper.mapAllForAdmin(hotels);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FindAllHotelForUserResponse> findAllForUser() {
+        List<Hotel> hotels = hotelRepository.findAll();
+        return hotelMapper.mapAllForUser(hotels);
+    }
+
+    @Override
+    @Transactional
+    public void enableReservation(EnableAndDisableReservationsHotelRequest request) {
+        Hotel hotel = hotelRepository.findById(request.getId())
+                .orElseThrow(()->new NotFoundException("hotel.notFound"));
+        hotel.setAcceptReservations(true);
+        hotelRepository.save(hotel);
+    }
+
+    @Override
+    @Transactional
+    public void disableReservation(EnableAndDisableReservationsHotelRequest request) {
+        Hotel hotel = hotelRepository.findById(request.getId())
+                .orElseThrow(()->new NotFoundException("hotel.notFound"));
+        hotel.setAcceptReservations(false);
+        hotelRepository.save(hotel);
     }
 
 }
