@@ -1,10 +1,8 @@
 package ru.fomin.hotels.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
-import lombok.*;
-import ru.fomin.hotels.entity.RoomCategory;
 
+import lombok.*;
 import java.time.Instant;
 
 @Getter
@@ -18,7 +16,7 @@ public class CreateRoomCategoryOptionRequest {
     private Integer id;
 
     @JsonProperty(value = "room_category")
-    private RoomCategory roomCategory;
+    private Integer roomCategoryId;
 
     @JsonProperty(value = "last_edit")
     private Instant priceLastEditedAtUtc;
