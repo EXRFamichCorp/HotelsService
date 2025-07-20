@@ -31,7 +31,6 @@ public class RoomCategoryOptionServiceImplements implements RoomCategoryOptionSe
         RoomCategoryOption roomCategoryOption = roomCategoryOptionMapper.map(request);
         roomCategoryOption.setRoomCategory(roomCategory);
         roomCategoryOptionRepository.save(roomCategoryOption);
-
     }
 
 }

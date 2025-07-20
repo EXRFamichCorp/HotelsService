@@ -62,10 +62,4 @@ public class HotelRestController {
         return ResponseEntity.ok().build();
     }
 
-
-
-
-
-
-
 }

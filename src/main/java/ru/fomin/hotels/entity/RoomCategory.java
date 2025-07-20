@@ -32,9 +32,6 @@ public class RoomCategory {
     @Column(length = 500)
     private String description;
 
-    @Column(name = "rooms_count", nullable = false)
-    private Integer roomsCount;
-
     @ManyToMany
     @JoinTable(
         name = "room_category_conveniences",
