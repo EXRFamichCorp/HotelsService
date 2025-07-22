@@ -1,4 +1,4 @@
-package ru.fomin.hotels.rooms_availability_service;
+package ru.fomin.hotels.service.rooms_availability_service;
 
 import RoomsAvailability.RoomsAvailabilityServiceOuterClass;
 import com.google.protobuf.Timestamp;
@@ -15,7 +15,7 @@ public class RoomAvailabilityServiceClient {
 
     private final RoomCategoryMapper roomCategoryMapper;
 
-    protected GetRoomCategoriesAvailabilityResponse getRoomCategoriesAvailability(
+    public GetRoomCategoriesAvailabilityResponse getRoomCategoriesAvailability(
             String hotelId,
             Timestamp checkInDate,
             Timestamp checkOutDate,

@@ -46,4 +46,13 @@ public class RoomCategory {
     @OneToMany(mappedBy = "roomCategory")
     private Set<Rate> rates;
 
+    @Column(name = "adults_max_number", nullable = false)
+    private Short adultsMaxNumber;
+
+    @Column(name = "children_max_number", nullable = false)
+    private Short childrenMaxNumber;
+
+    @Column(name = "pets_max_number", nullable = false)
+    private Short petsMaxNumber;
+
 }

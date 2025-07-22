@@ -39,15 +39,6 @@ public class Rate {
     @Column(name = "max_nights_count", nullable = false)
     private Short maxNightsCount;
 
-    @Column(name = "adults_max_number", nullable = false)
-    private Short adultsMaxNumber;
-
-    @Column(name = "children_max_number", nullable = false)
-    private Short childrenMaxNumber;
-
-    @Column(name = "pets_max_number", nullable = false)
-    private Short petsMaxNumber;
-
     @OneToMany(mappedBy = "rate")
     private Set<RateIncludedService> includedServices;
 
