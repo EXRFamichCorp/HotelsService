@@ -1,0 +1,57 @@
+перед этим проверь наличие столбца image_urls для room_category. список строк хранить (посмотри как)
+
+сделать эндпоинт по получению всех категорий с информацией о доступности
+
+Структура запроса на сервер:
+
+RoomDistributionDto {
+     int adultsNumber // колво взрослых (минимум 1)
+     int childrenNumber // кол-во детей
+     int petsNumber // кол-во питомцев
+}
+
+GetRoomCategoriesAvailabilityRequest {
+     uuid hotelId
+     timestamp checkInDay // день заселения
+     timestamp checkOutDay // день выселения
+     RoomDistributionDto[] distributions // распределения по номерам
+}
+
+
+Структура ответа: 
+
+AvailableRoomCategoryDto {
+     int id
+     string title
+     string[] imageUrls
+     string[] convenienceIconUrls // список иконок удобств
+     decimal averagePriceForPeriod // средняя цена за выбранный период (с учетом кол-ва номеров)
+     int minimalRoomsNumber // минимальное количество номеров за выбранный период (типа вот 3 дня, там в каждый день разное кол-во номеров свободно, и мы берем минимальный)
+}
+
+averagePriceForPeriod, minimalRoomsNumber - это из сервиса доступности номеров приходит, просто переложи
+
+NonAvailableRoomCategoryDto {
+     int id
+     string title
+     string[] imageUrls
+     string[] convenienceIconUrls // список иконок удобств
+}
+
+RoomCategoriesAvailabilityResponse {
+     AvailableRoomCategory[] availableRoomCategories - доступные категории номеров на выбранный период
+     NonAvailableRoomCategory[] nonAvailableRoomCategories - недоступные категории номеров на выбранный период
+     NonAvailableRoomCategory[] nonAccommodatedRoomCategories - категории номеров, которые не вмещают хотя бы одно распределение
+}
+
+(параметр требуемое количество номеров для запроса в другой сервис = кол-во распределений)
+
+категория номера считается доступным если:
+- его айди есть среди категорий номеров пришедших из сервиса доступности 
+- он вмещает все распределения
+
+категория считается недоступным если:
+- его айди нет среди категорий номеров пришедших из сервиса доступности 
+
+категория считается невмещающей если:
+- есть хотя бы одно распределение, которое не вместит данная категория
