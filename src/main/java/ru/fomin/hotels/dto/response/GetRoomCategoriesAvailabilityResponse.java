@@ -14,6 +14,6 @@ import java.util.List;
 public class GetRoomCategoriesAvailabilityResponse {
 
     @JsonProperty(value = "room_category")
-    private List<RoomCategory> roomCategories;
+    private List<RoomCategoryAvailabilityInfo> roomCategoriesInfo;
 
 }
